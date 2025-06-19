@@ -1,7 +1,7 @@
 :root {
   --main-color: #c1af89; /* page bg */
-  --target-color: #84cc16; /* circle */
-  --target-border: #85cd17; /* circle border */
+  --target-color: #f66151; /* circle */
+  --target-border: #ff6b59; /* circle border */
   --custom-target-color: ;
   --custom-target-border: ;
   --pulse-rgb: 132, 204, 22;
@@ -16,8 +16,8 @@
 
 body.theme-nord {
   --main-color: #2e3440;
-  --target-color: #a3be8c;
-  --target-border: #88c0d0;
+  --target-color: #f66161;
+  --target-border: #ff6b59;
   --text-color: #eceff4;
   --hud-bg: #3b4252ee;
   --font-color: #eceff4;
