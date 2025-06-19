@@ -18,6 +18,27 @@ const backBtn = document.getElementById("backBtn");
 const saveSettingsBtn = document.getElementById("saveSettingsBtn");
 const darkModeToggle = document.getElementById("darkModeToggle");
 const circleSizeInput = document.getElementById("circleSizeInput");
+const circleColorInput = document.getElementById("circleColorInput");
+const circlePreview = document.getElementById("circlePreview");
+
+darkModeToggle.onchange = () => {
+    if (darkModeToggle.checked) {
+        document.body.classList.add("theme-nord");
+        localStorage.setItem("theme", "nord");
+    } else {
+        document.body.classList.remove("theme-nord");
+        localStorage.setItem("theme", "light");
+    }
+};
+
+circleSizeInput.oninput = () => {
+    updateCirclePreview();
+};
+
+circleColorInput.oninput = () => {
+    circleColor = circleColorInput.value;
+    applyCircleColor();
+};
 
 let prevTimestamp = null;
 let times = [];
@@ -27,11 +48,23 @@ let timerInterval = null;
 let startTime = null;
 let isRunning = false;
 let circleSize = 60;
+let circleColor = "#84cc16";
 
 function applyCircleSize() {
     target.style.width = circleSize + "px";
     target.style.height = circleSize + "px";
     document.documentElement.style.setProperty("--circle-size", circleSize + "px");
+}
+
+function applyCircleColor() {
+    document.documentElement.style.setProperty("--custom-target-color", circleColor);
+    circlePreview.style.background = circleColor;
+    circlePreview.style.borderColor = circleColor;
+}
+
+function updateCirclePreview() {
+    circlePreview.style.width = circleSizeInput.value + "px";
+    circlePreview.style.height = circleSizeInput.value + "px";
 }
 
 // safe margin from all borders
@@ -166,6 +199,7 @@ clearHistoryBtn.onclick = () => {
 settingsBtn.onclick = () => {
     menu.style.display = "none";
     settingsPage.style.display = "";
+    loadSettings();
 };
 
 backBtn.onclick = () => {
@@ -184,20 +218,20 @@ function loadSettings() {
     }
     circleSize = parseInt(localStorage.getItem("circleSize") || "60");
     circleSizeInput.value = circleSize;
+    circleColor = localStorage.getItem("circleColor") || circleColor;
+    circleColorInput.value = circleColor;
     applyCircleSize();
+    applyCircleColor();
+    updateCirclePreview();
 }
 
 saveSettingsBtn.onclick = () => {
-    if (darkModeToggle.checked) {
-        document.body.classList.add("theme-nord");
-        localStorage.setItem("theme", "nord");
-    } else {
-        document.body.classList.remove("theme-nord");
-        localStorage.setItem("theme", "light");
-    }
     circleSize = parseInt(circleSizeInput.value) || 60;
     localStorage.setItem("circleSize", circleSize);
+    circleColor = circleColorInput.value || circleColor;
+    localStorage.setItem("circleColor", circleColor);
     applyCircleSize();
+    applyCircleColor();
     backBtn.click();
 };
 

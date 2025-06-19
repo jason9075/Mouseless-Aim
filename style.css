@@ -2,6 +2,7 @@
   --main-color: #c1af89; /* page bg */
   --target-color: #84cc16; /* circle */
   --target-border: #85cd17; /* circle border */
+  --custom-target-color: ;
   --text-color: #706b68; /* text color */
   --hud-bg: #232946ee; /* HUD bg */
   --font-color: #232946; /* menu/font */
@@ -22,6 +23,7 @@ body.theme-nord {
   --history-bg: #434c5e;
   --clear-btn-bg: #4c566a;
   --clear-btn-color: #eceff4;
+  --custom-target-color: ;
 }
 
 body {
@@ -159,11 +161,11 @@ button:active {
   width: var(--circle-size, 60px);
   height: var(--circle-size, 60px);
   border-radius: 50%;
-  background: var(--target-color);
+  background: var(--custom-target-color, var(--target-color));
   box-shadow: 0 4px 24px #84cc1688;
   cursor: pointer;
   z-index: 1000;
-  border: 4px solid var(--target-border);
+  border: 4px solid var(--custom-target-color, var(--target-border));
   transition: box-shadow 0.2s;
   animation: pulse 1.5s infinite;
 }
@@ -199,6 +201,16 @@ button:active {
 }
 #settingsPage input[type="number"] {
   width: 80px;
+}
+#settingsPage .preview-circle {
+  display: inline-block;
+  margin-left: 0.6em;
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--custom-target-color, var(--target-color));
+  border: 4px solid var(--custom-target-color, var(--target-border));
 }
 
 .icon-btn {
