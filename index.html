@@ -19,12 +19,11 @@
             <button id="clearHistoryBtn">Clear</button>
         </div>
     </div>
-    <div id="settingsPage">
+    <div id="settingsPage" style="display: none">
         <h2>Settings</h2>
         <label class="toggle"><input type="checkbox" id="darkModeToggle" /><span class="slider"></span><span>Dark mode</span></label>
-        <label>Circle size: <input type="number" id="circleSizeInput" min="20" max="120" step="5" />
-            <span id="circlePreview" class="preview-circle"></span></label>
-        <label>Circle color: <input type="color" id="circleColorInput" /></label>
+        <label><span id="circlePreview" class="preview-circle"></span> Circle size: <input type="number" id="circleSizeInput" min="20" max="120" step="5" /></label>
+        <label><input type="color" id="circleColorInput" /> Circle color</label>
         <button id="saveSettingsBtn">Save</button>
         <button id="backBtn">Back</button>
     </div>
