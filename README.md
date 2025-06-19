@@ -8,7 +8,7 @@ This project was created as a vibe coding session.
 
 ## 🚀 Live Demo
 
-👉 [MouselessAim](https://jason9075.github.io/MouselessAim/)
+👉 [MouselessAim](https://jason9075.github.io/Mouseless-Aim/)
 
 ---
 
