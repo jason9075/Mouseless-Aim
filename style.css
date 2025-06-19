@@ -1,0 +1,167 @@
+:root {
+  --main-color: #c1af89; /* page bg */
+  --target-color: #84cc16; /* circle */
+  --target-border: #85cd17; /* circle border */
+  --text-color: #706b68; /* text color */
+  --hud-bg: #232946ee; /* HUD bg */
+  --font-color: #232946; /* menu/font */
+}
+
+body {
+  background: var(--main-color);
+  color: var(--font-color);
+  font-family: "Segoe UI", Arial, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+#menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fffbe9;
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  padding: 2em 3em;
+  text-align: center;
+  min-width: 350px;
+}
+
+h1 {
+  color: var(--text-color);
+  margin-bottom: 0.2em;
+}
+
+button {
+  background: var(--text-color);
+  color: var(--main-color);
+  border: none;
+  padding: 0.7em 1.5em;
+  margin: 0.5em;
+  font-size: 1.1em;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 2px 10px #23294622;
+  transition: filter 0.1s;
+}
+button:active {
+  filter: brightness(0.92);
+}
+
+#stopBtn {
+  position: fixed;
+  top: 32px;
+  right: 32px;
+  z-index: 1500;
+  background: #232946;
+  color: #fff;
+  font-size: 1em;
+  padding: 0.6em 1.4em;
+  border-radius: 12px;
+  font-weight: bold;
+  box-shadow: 0 4px 20px #23294644;
+}
+
+#scoreHud {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  z-index: 1200;
+  background: var(--hud-bg);
+  color: #fff;
+  padding: 1em 1.3em;
+  border-radius: 14px;
+  font-size: 1.13em;
+  box-shadow: 0 2px 12px #23294655;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+  align-items: flex-end;
+}
+
+#scoreboard {
+  display: flex;
+  flex-direction: row;
+  gap: 1.1em;
+  font-size: 0.97em;
+  flex-wrap: wrap;
+}
+#scoreboard span {
+  min-width: 84px;
+}
+#timer {
+  font-size: 1.05em;
+  color: #fff;
+}
+
+#historyArea {
+  margin-top: 2em;
+  background: #fffaeb;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #23294622;
+  padding: 1em;
+  color: var(--font-color);
+}
+#historyArea h2 {
+  margin-top: 0;
+  color: var(--text-color);
+  font-size: 1.1em;
+}
+#historyList {
+  list-style: none;
+  padding: 0;
+  margin: 0.5em 0 0 0;
+  font-size: 0.98em;
+  text-align: left;
+  max-height: 180px;
+  overflow-y: auto;
+}
+#historyList li {
+  border-bottom: 1px dashed #e2d6b9;
+  padding: 4px 0;
+  font-family: "Consolas", monospace;
+}
+#clearHistoryBtn {
+  display: block;
+  background: #e7d9b9;
+  color: #a08b58;
+  font-size: 0.95em;
+  margin: 0.5em auto 0;
+  padding: 0.35em 1em;
+  border-radius: 6px;
+  border: none;
+  box-shadow: none;
+  float: none;
+}
+
+#target {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--target-color);
+  box-shadow: 0 4px 24px #84cc1688;
+  cursor: pointer;
+  z-index: 1000;
+  border: 4px solid var(--target-border);
+  transition: box-shadow 0.2s;
+}
+
+@media (max-width: 600px) {
+  #menu {
+    padding: 1em 0.2em;
+    min-width: 0;
+  }
+  #scoreHud {
+    right: 8px;
+    bottom: 8px;
+    padding: 0.7em 0.5em;
+  }
+  #stopBtn {
+    right: 10px;
+    top: 10px;
+  }
+}

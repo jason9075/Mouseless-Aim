@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Mouseless Aim</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div id="menu">
+        <h1>Mouseless Aim</h1>
+        <button id="startBtn">Start</button>
+        <div id="historyArea">
+            <h2>History</h2>
+            <ul id="historyList"></ul>
+            <button id="clearHistoryBtn">Clear</button>
+        </div>
+    </div>
+    <button id="stopBtn" style="display: none">Stop</button>
+    <div id="scoreHud" style="display: none">
+        <div id="timer">Time: <span id="timerSpan">0.00</span>s</div>
+        <div id="scoreboard">
+            <span>Clicks: <span id="clickCount">0</span></span>
+            <span>Avg(ms): <span id="avgTime">0</span></span>
+            <span>Fastest(ms): <span id="minTime">-</span></span>
+            <span>Slowest(ms): <span id="maxTime">-</span></span>
+        </div>
+    </div>
+    <div id="target" style="display: none"></div>
+    <script src="script.js"></script>
+</body>
+
+</html>
