@@ -12,6 +12,12 @@ const historyList = document.getElementById("historyList");
 const clearHistoryBtn = document.getElementById("clearHistoryBtn");
 const menu = document.getElementById("menu");
 const scoreHud = document.getElementById("scoreHud");
+const settingsBtn = document.getElementById("settingsBtn");
+const settingsPage = document.getElementById("settingsPage");
+const backBtn = document.getElementById("backBtn");
+const saveSettingsBtn = document.getElementById("saveSettingsBtn");
+const darkModeToggle = document.getElementById("darkModeToggle");
+const circleSizeInput = document.getElementById("circleSizeInput");
 
 let prevTimestamp = null;
 let times = [];
@@ -20,12 +26,19 @@ let timer = 0;
 let timerInterval = null;
 let startTime = null;
 let isRunning = false;
+let circleSize = 60;
+
+function applyCircleSize() {
+    target.style.width = circleSize + "px";
+    target.style.height = circleSize + "px";
+    document.documentElement.style.setProperty("--circle-size", circleSize + "px");
+}
 
 // safe margin from all borders
 const margin = 70; // should be > radius+border
 
 function randomPos() {
-    const targetSize = 60 + 4 * 2; // circle + border
+    const targetSize = circleSize + 4 * 2; // circle + border
     const w = window.innerWidth;
     const h = window.innerHeight;
     const minX = margin;
@@ -71,6 +84,7 @@ startBtn.onclick = () => {
     minTimeSpan.textContent = "-";
     maxTimeSpan.textContent = "-";
     target.style.display = "";
+    applyCircleSize();
     randomPos();
     isRunning = true;
     timer = 0;
@@ -149,11 +163,58 @@ clearHistoryBtn.onclick = () => {
     loadHistory();
 };
 
+settingsBtn.onclick = () => {
+    menu.style.display = "none";
+    settingsPage.style.display = "";
+};
+
+backBtn.onclick = () => {
+    settingsPage.style.display = "none";
+    menu.style.display = "";
+};
+
+function loadSettings() {
+    const theme = localStorage.getItem("theme");
+    if (theme === "nord") {
+        document.body.classList.add("theme-nord");
+        darkModeToggle.checked = true;
+    } else {
+        document.body.classList.remove("theme-nord");
+        darkModeToggle.checked = false;
+    }
+    circleSize = parseInt(localStorage.getItem("circleSize") || "60");
+    circleSizeInput.value = circleSize;
+    applyCircleSize();
+}
+
+saveSettingsBtn.onclick = () => {
+    if (darkModeToggle.checked) {
+        document.body.classList.add("theme-nord");
+        localStorage.setItem("theme", "nord");
+    } else {
+        document.body.classList.remove("theme-nord");
+        localStorage.setItem("theme", "light");
+    }
+    circleSize = parseInt(circleSizeInput.value) || 60;
+    localStorage.setItem("circleSize", circleSize);
+    applyCircleSize();
+    backBtn.click();
+};
+
 document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && isRunning) stopGame();
+    if (e.key === "Escape") {
+        if (settingsPage.style.display !== "none") {
+            backBtn.click();
+        } else if (isRunning) {
+            stopGame();
+        }
+    }
 });
 
-window.onload = loadHistory;
+window.onload = () => {
+    loadHistory();
+    loadSettings();
+};
 
 // Optional: keyboard trigger for target
 document.addEventListener("keydown", (e) => {
