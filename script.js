@@ -12,6 +12,39 @@ const historyList = document.getElementById("historyList");
 const clearHistoryBtn = document.getElementById("clearHistoryBtn");
 const menu = document.getElementById("menu");
 const scoreHud = document.getElementById("scoreHud");
+const settingsBtn = document.getElementById("settingsBtn");
+const settingsPage = document.getElementById("settingsPage");
+const backBtn = document.getElementById("backBtn");
+const saveSettingsBtn = document.getElementById("saveSettingsBtn");
+const darkModeToggle = document.getElementById("darkModeToggle");
+const circleSizeInput = document.getElementById("circleSizeInput");
+const circleColorInput = document.getElementById("circleColorInput");
+const circlePreview = document.getElementById("circlePreview");
+
+darkModeToggle.onchange = () => {
+    if (darkModeToggle.checked) {
+        document.body.classList.add("theme-nord");
+        localStorage.setItem("theme", "nord");
+    } else {
+        document.body.classList.remove("theme-nord");
+        localStorage.setItem("theme", "light");
+    }
+    if (!localStorage.getItem("circleColor")) {
+        circleColor = getComputedStyle(document.body)
+            .getPropertyValue("--target-color")
+            .trim();
+    }
+    applyCircleColor();
+};
+
+circleSizeInput.oninput = () => {
+    updateCirclePreview();
+};
+
+circleColorInput.oninput = () => {
+    circleColor = circleColorInput.value;
+    applyCircleColor();
+};
 
 let prevTimestamp = null;
 let times = [];
@@ -20,12 +53,52 @@ let timer = 0;
 let timerInterval = null;
 let startTime = null;
 let isRunning = false;
+let circleSize = 60;
+let circleColor = "#84cc16";
+
+function hexToRgb(hex) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return { r, g, b };
+}
+
+function adjustColor(col, factor) {
+    const r = Math.min(255, Math.max(0, Math.round(parseInt(col.slice(1, 3), 16) * factor)));
+    const g = Math.min(255, Math.max(0, Math.round(parseInt(col.slice(3, 5), 16) * factor)));
+    const b = Math.min(255, Math.max(0, Math.round(parseInt(col.slice(5, 7), 16) * factor)));
+    return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+}
+
+function applyCircleSize() {
+    target.style.width = circleSize + "px";
+    target.style.height = circleSize + "px";
+    document.documentElement.style.setProperty("--circle-size", circleSize + "px");
+}
+
+function applyCircleColor() {
+    const border = adjustColor(circleColor, 1.1);
+    document.documentElement.style.setProperty("--custom-target-color", circleColor);
+    document.documentElement.style.setProperty("--custom-target-border", border);
+    const rgb = hexToRgb(circleColor);
+    document.documentElement.style.setProperty(
+        "--pulse-rgb",
+        `${rgb.r}, ${rgb.g}, ${rgb.b}`,
+    );
+    circlePreview.style.background = circleColor;
+    circlePreview.style.borderColor = border;
+}
+
+function updateCirclePreview() {
+    circlePreview.style.width = circleSizeInput.value + "px";
+    circlePreview.style.height = circleSizeInput.value + "px";
+}
 
 // safe margin from all borders
 const margin = 70; // should be > radius+border
 
 function randomPos() {
-    const targetSize = 60 + 4 * 2; // circle + border
+    const targetSize = circleSize + 4 * 2; // circle + border
     const w = window.innerWidth;
     const h = window.innerHeight;
     const minX = margin;
@@ -71,6 +144,7 @@ startBtn.onclick = () => {
     minTimeSpan.textContent = "-";
     maxTimeSpan.textContent = "-";
     target.style.display = "";
+    applyCircleSize();
     randomPos();
     isRunning = true;
     timer = 0;
@@ -149,11 +223,63 @@ clearHistoryBtn.onclick = () => {
     loadHistory();
 };
 
+settingsBtn.onclick = () => {
+    menu.style.display = "none";
+    settingsPage.style.display = "";
+    loadSettings();
+};
+
+backBtn.onclick = () => {
+    settingsPage.style.display = "none";
+    menu.style.display = "";
+};
+
+function loadSettings() {
+    const theme = localStorage.getItem("theme");
+    if (theme === "nord") {
+        document.body.classList.add("theme-nord");
+        darkModeToggle.checked = true;
+    } else {
+        document.body.classList.remove("theme-nord");
+        darkModeToggle.checked = false;
+    }
+    circleSize = parseInt(localStorage.getItem("circleSize") || "60");
+    circleSizeInput.value = circleSize;
+    const storedColor = localStorage.getItem("circleColor");
+    const defaultColor = getComputedStyle(document.body)
+        .getPropertyValue("--target-color")
+        .trim();
+    circleColor = storedColor || defaultColor;
+    circleColorInput.value = circleColor;
+    applyCircleSize();
+    applyCircleColor();
+    updateCirclePreview();
+}
+
+saveSettingsBtn.onclick = () => {
+    circleSize = parseInt(circleSizeInput.value) || 60;
+    localStorage.setItem("circleSize", circleSize);
+    circleColor = circleColorInput.value || circleColor;
+    localStorage.setItem("circleColor", circleColor);
+    applyCircleSize();
+    applyCircleColor();
+    backBtn.click();
+};
+
 document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && isRunning) stopGame();
+    if (e.key === "Escape") {
+        if (settingsPage.style.display !== "none") {
+            backBtn.click();
+        } else if (isRunning) {
+            stopGame();
+        }
+    }
 });
 
-window.onload = loadHistory;
+window.onload = () => {
+    loadHistory();
+    loadSettings();
+};
 
 // Optional: keyboard trigger for target
 document.addEventListener("keydown", (e) => {
