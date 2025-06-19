@@ -50,6 +50,13 @@ let isRunning = false;
 let circleSize = 60;
 let circleColor = "#84cc16";
 
+function adjustColor(col, factor) {
+    const r = Math.min(255, Math.max(0, Math.round(parseInt(col.slice(1, 3), 16) * factor)));
+    const g = Math.min(255, Math.max(0, Math.round(parseInt(col.slice(3, 5), 16) * factor)));
+    const b = Math.min(255, Math.max(0, Math.round(parseInt(col.slice(5, 7), 16) * factor)));
+    return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+}
+
 function applyCircleSize() {
     target.style.width = circleSize + "px";
     target.style.height = circleSize + "px";
@@ -57,9 +64,11 @@ function applyCircleSize() {
 }
 
 function applyCircleColor() {
+    const border = adjustColor(circleColor, 1.1);
     document.documentElement.style.setProperty("--custom-target-color", circleColor);
+    document.documentElement.style.setProperty("--custom-target-border", border);
     circlePreview.style.background = circleColor;
-    circlePreview.style.borderColor = circleColor;
+    circlePreview.style.borderColor = border;
 }
 
 function updateCirclePreview() {
