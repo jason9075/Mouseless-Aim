@@ -4,6 +4,7 @@
   --target-border: #85cd17; /* circle border */
   --custom-target-color: ;
   --custom-target-border: ;
+  --pulse-rgb: 132, 204, 22;
   --text-color: #706b68; /* text color */
   --hud-bg: #232946ee; /* HUD bg */
   --font-color: #232946; /* menu/font */
@@ -26,6 +27,7 @@ body.theme-nord {
   --clear-btn-color: #eceff4;
   --custom-target-color: ;
   --custom-target-border: ;
+  --pulse-rgb: 163, 190, 140;
 }
 
 body {
@@ -46,7 +48,7 @@ body {
   border-radius: 24px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   padding: 2em 3em;
-  text-align: center;
+  text-align: left;
   min-width: 350px;
 }
 
@@ -174,13 +176,13 @@ button:active {
 
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(132, 204, 22, 0.7);
+    box-shadow: 0 0 0 0 rgba(var(--pulse-rgb), 0.7);
   }
   70% {
-    box-shadow: 0 0 0 15px rgba(132, 204, 22, 0);
+    box-shadow: 0 0 0 15px rgba(var(--pulse-rgb), 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(132, 204, 22, 0);
+    box-shadow: 0 0 0 0 rgba(var(--pulse-rgb), 0);
   }
 }
 
@@ -193,7 +195,7 @@ button:active {
   border-radius: 24px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   padding: 2em 3em;
-  text-align: center;
+  text-align: left;
   min-width: 350px;
 }
 #settingsPage label {
