@@ -25,9 +25,6 @@ body.theme-nord {
   --history-bg: #434c5e;
   --clear-btn-bg: #4c566a;
   --clear-btn-color: #eceff4;
-  --custom-target-color: ;
-  --custom-target-border: ;
-  --pulse-rgb: 163, 190, 140;
 }
 
 body {
@@ -198,8 +195,10 @@ button:active {
   text-align: left;
   min-width: 350px;
 }
-#settingsPage label {
-  display: block;
+#settingsPage .setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin: 1em 0;
 }
 #settingsPage input[type="number"] {
@@ -207,8 +206,8 @@ button:active {
 }
 #settingsPage .toggle {
   display: flex;
+  flex-direction: row-reverse;
   align-items: center;
-  justify-content: flex-start;
   gap: 0.5em;
 }
 #settingsPage .toggle input {
@@ -243,7 +242,7 @@ button:active {
 }
 #settingsPage .preview-circle {
   display: inline-block;
-  margin-right: 0.6em;
+  margin-left: 0.6em;
   vertical-align: middle;
   width: 40px;
   height: 40px;
@@ -253,7 +252,7 @@ button:active {
 }
 
 #settingsPage input[type="color"] {
-  margin-right: 0.6em;
+  margin-left: 0.6em;
   vertical-align: middle;
 }
 

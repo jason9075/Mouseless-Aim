@@ -29,6 +29,12 @@ darkModeToggle.onchange = () => {
         document.body.classList.remove("theme-nord");
         localStorage.setItem("theme", "light");
     }
+    if (!localStorage.getItem("circleColor")) {
+        circleColor = getComputedStyle(document.body)
+            .getPropertyValue("--target-color")
+            .trim();
+    }
+    applyCircleColor();
 };
 
 circleSizeInput.oninput = () => {
@@ -239,7 +245,11 @@ function loadSettings() {
     }
     circleSize = parseInt(localStorage.getItem("circleSize") || "60");
     circleSizeInput.value = circleSize;
-    circleColor = localStorage.getItem("circleColor") || circleColor;
+    const storedColor = localStorage.getItem("circleColor");
+    const defaultColor = getComputedStyle(document.body)
+        .getPropertyValue("--target-color")
+        .trim();
+    circleColor = storedColor || defaultColor;
     circleColorInput.value = circleColor;
     applyCircleSize();
     applyCircleColor();
