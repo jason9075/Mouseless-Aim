@@ -1,6 +1,5 @@
 const target = document.getElementById("target");
 const startBtn = document.getElementById("startBtn");
-const stopBtn = document.getElementById("stopBtn");
 const scoreboard = document.getElementById("scoreboard");
 const clickCountSpan = document.getElementById("clickCount");
 const avgTimeSpan = document.getElementById("avgTime");
@@ -20,6 +19,7 @@ const darkModeToggle = document.getElementById("darkModeToggle");
 const circleSizeInput = document.getElementById("circleSizeInput");
 const circleColorInput = document.getElementById("circleColorInput");
 const circlePreview = document.getElementById("circlePreview");
+const escPrompt = document.getElementById("escPrompt");
 
 darkModeToggle.onchange = () => {
     if (darkModeToggle.checked) {
@@ -134,7 +134,7 @@ target.addEventListener("click", () => {
 
 startBtn.onclick = () => {
     menu.style.display = "none";
-    stopBtn.style.display = "";
+    escPrompt.style.display = "";
     scoreHud.style.display = "";
     clickCount = 0;
     times = [];
@@ -160,7 +160,7 @@ startBtn.onclick = () => {
 function stopGame() {
     isRunning = false;
     menu.style.display = "";
-    stopBtn.style.display = "none";
+    escPrompt.style.display = "none";
     scoreHud.style.display = "none";
     target.style.display = "none";
     if (timerInterval) clearInterval(timerInterval);
@@ -176,7 +176,6 @@ function stopGame() {
     timerSpan.textContent = "0.00";
 }
 
-stopBtn.onclick = stopGame;
 
 function saveHistory() {
     let record = {

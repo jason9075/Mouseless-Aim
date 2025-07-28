@@ -71,18 +71,16 @@ button:active {
   filter: brightness(0.92);
 }
 
-#stopBtn {
+
+#escPrompt {
   position: fixed;
-  top: 32px;
-  right: 32px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--font-color);
+  font-size: 1.5em;
+  pointer-events: none;
   z-index: 1500;
-  background: #232946;
-  color: #fff;
-  font-size: 1em;
-  padding: 0.6em 1.4em;
-  border-radius: 12px;
-  font-weight: bold;
-  box-shadow: 0 4px 20px #23294644;
 }
 
 #scoreHud {
@@ -165,7 +163,8 @@ button:active {
   background: var(--custom-target-color, var(--target-color));
   box-shadow: 0 4px 24px #84cc1688;
   cursor: pointer;
-  z-index: 1000;
+  /* Ensure the target sits above the HUD */
+  z-index: 1300;
   border: 4px solid var(--custom-target-border, var(--target-border));
   transition: box-shadow 0.2s;
   animation: pulse 1.5s infinite;
@@ -283,10 +282,6 @@ button:active {
     right: 8px;
     bottom: 8px;
     padding: 0.7em 0.5em;
-  }
-  #stopBtn {
-    right: 10px;
-    top: 10px;
   }
   #settingsBtn {
     top: 8px;
